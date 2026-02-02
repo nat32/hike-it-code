@@ -1,0 +1,172 @@
+<!-- STATISTICS -->
+<div class="statistics">
+  <h1>Statistics</h1>
+  <div class="circular-statistics-container">
+    <div class="circular-statistics">
+      <div>
+        <p>Total of kilometers done : {{ totalKmsDone | number: '1.2-2' }}</p>
+        <p>Goal : 100km</p>
+        <p>Current progress : {{ percentageKmsDone }} %</p>
+      </div>
+      <div
+        class="circular-progress"
+        [style.background]="
+          'conic-gradient(#449944 ' + progressStartValueKm * 3.6 + 'deg, #ededed 0deg)'
+        "
+      >
+        <span class="progress-value">{{ progressStartValueKm }}%</span>
+      </div>
+    </div>
+
+    <div class="circular-statistics">
+      <div>
+        <p>Total of actual hours spend : {{ totalActualTimeSpend | number: '1.2-2' }}</p>
+        <p>Goal : 200h</p>
+        <p>Current progress : {{ percentageActualTimeSpend }} %</p>
+      </div>
+      <div
+        class="circular-progress"
+        [style.background]="
+          'conic-gradient(#449944 ' + progressStartValueActualTime * 3.6 + 'deg, #ededed 0deg)'
+        "
+      >
+        <span class="progress-value">{{ progressStartValueActualTime }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-container">
+    <div class="line-chart-container">
+      <canvas id="lineChart">{{ lineChart }}</canvas>
+    </div>
+
+    <div class="bar-chart-container">
+      <canvas id="barChart">{{ barChart }}</canvas>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!hikesEmpty" class="hikes-container">
+  <div id="add-form" class="add-form">
+    <button class="custom-button add-button" matButton="filled" (click)="showAddForm()">
+      {{ addButtonText }}
+    </button>
+    <app-add-hike *ngIf="isAddFormVisible" (newHikeEvent)="addHike($event)"></app-add-hike>
+  </div>
+
+  <!-- TABLE -->
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <!-- IdColumn -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Distance Column -->
+    <ng-container matColumnDef="distance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Distance</th>
+      <td mat-cell *matCellDef="let element">{{ element.distance }}</td>
+    </ng-container>
+
+    <!-- Starting Point Column -->
+    <ng-container matColumnDef="startPoint">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Starting Point</th>
+      <td mat-cell *matCellDef="let element">{{ element.startPoint }}</td>
+    </ng-container>
+
+    <!-- Ending Point Column -->
+    <ng-container matColumnDef="endPoint">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ending Point</th>
+      <td mat-cell *matCellDef="let element">{{ element.endPoint }}</td>
+    </ng-container>
+
+    <!-- Estimated Time Column -->
+    <ng-container matColumnDef="estimatedTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estimated Time</th>
+      <td mat-cell *matCellDef="let element">{{ element.estimatedTime }}</td>
+    </ng-container>
+
+    <!-- Difficulty Column -->
+    <ng-container matColumnDef="difficulty">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Difficulty</th>
+      <td mat-cell *matCellDef="let element">{{ element.difficulty }}</td>
+    </ng-container>
+
+    <!-- Scheduled Date Column -->
+    <ng-container matColumnDef="scheduledDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Scheduled Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.scheduledDate | date: 'dd/MM/yyyy' }}</td>
+    </ng-container>
+
+    <!-- Elevation Column -->
+    <ng-container matColumnDef="elevation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Elevation</th>
+      <td mat-cell *matCellDef="let element">{{ element.elevation }}</td>
+    </ng-container>
+
+    <!-- Done Column -->
+    <ng-container matColumnDef="done">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Done</th>
+      <td mat-cell *matCellDef="let element">{{ element.done }}</td>
+    </ng-container>
+
+    <!-- Actual Time Column -->
+    <ng-container matColumnDef="actualTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Actual Time</th>
+      <td mat-cell *matCellDef="let element">{{ element.actualTime }}</td>
+    </ng-container>
+
+    <!-- Score Column -->
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Score</th>
+      <td mat-cell *matCellDef="let element">{{ element.score }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          class="actions-icon color-edit"
+          fontIcon="edit"
+          (click)="clickToEditHike(element)"
+        ></mat-icon>
+
+        <mat-icon
+          class="actions-icon color-delete"
+          fontIcon="delete"
+          (click)="deleteHike(element.id)"
+        ></mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 15]"
+    showFirstLastButtons
+    aria-label="Select page of items"
+  >
+  </mat-paginator>
+
+  <div id="edit-form" class="edit-form" *ngIf="isEditFormVisible">
+    <button class="edit-button custom-button" matButton="filled" (click)="closeEditHikeForm()">
+      Close Edit Hike Form
+    </button>
+
+    <app-edit-hike
+      [hikeToEdit]="currentHike"
+      [events]="eventsChangeSubject.asObservable()"
+      (editedHike)="editHike($event)"
+    ></app-edit-hike>
+  </div>
+</div>

@@ -1,0 +1,174 @@
+<form class="form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <!-- Name -->
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" placeholder="Ex: Hike" />
+    <mat-error *ngIf="myForm.get('name')?.touched && myForm.get('name')?.hasError('required')">
+      Name is required
+    </mat-error>
+    <mat-error *ngIf="myForm.get('name')?.touched && myForm.get('name')?.hasError('maxlength')">
+      Name maximum length is 250 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Distance -->
+  <mat-form-field>
+    <mat-label>Distance</mat-label>
+    <input matInput formControlName="distance" placeholder="Ex: 6.50" />
+    <mat-error
+      *ngIf="myForm.get('distance')?.touched && myForm.get('distance')?.hasError('required')"
+    >
+      Distance is required
+    </mat-error>
+    <mat-error
+      *ngIf="myForm.get('distance')?.touched && myForm.get('distance')?.hasError('maxlength')"
+    >
+      Location maximum length is 30 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Starting Point -->
+  <mat-form-field>
+    <mat-label>Starting Point</mat-label>
+    <input matInput formControlName="startPoint" placeholder="Ex: Gare Nice" />
+    <mat-error
+      *ngIf="myForm.get('startPoint')?.touched && myForm.get('startPoint')?.hasError('required')"
+    >
+      Starting Point is required
+    </mat-error>
+    <mat-error
+      *ngIf="myForm.get('startPoint')?.touched && myForm.get('startPoint')?.hasError('maxlength')"
+    >
+      Starting Point maximum length is 200 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Ending Point -->
+  <mat-form-field>
+    <mat-label>Ending Point</mat-label>
+    <input matInput formControlName="endPoint" placeholder="Ex: Gare Nice" />
+    <mat-error
+      *ngIf="myForm.get('endPoint')?.touched && myForm.get('endPoint')?.hasError('required')"
+    >
+      Ending Point is required
+    </mat-error>
+    <mat-error
+      *ngIf="myForm.get('endPoint')?.touched && myForm.get('endPoint')?.hasError('maxlength')"
+    >
+      Ending Point maximum length is 200 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Estimated Time -->
+  <mat-form-field>
+    <mat-label>Estimated Time</mat-label>
+    <input matInput formControlName="estimatedTime" placeholder="Ex: 3.5" type="number" />
+    <mat-error
+      *ngIf="
+        myForm.get('estimatedTime')?.touched && myForm.get('estimatedTime')?.hasError('required')
+      "
+    >
+      Estimated Time is required
+    </mat-error>
+    <mat-error
+      *ngIf="
+        myForm.get('estimatedTime')?.touched && myForm.get('estimatedTime')?.hasError('maxlength')
+      "
+    >
+      Estimated Time maximum length is 5 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Difficulty -->
+  <mat-form-field>
+    <mat-label>Difficulty</mat-label>
+
+    <mat-select formControlName="difficulty">
+      <mat-option *ngFor="let option of difficulties; index as i" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+    <mat-error
+      *ngIf="myForm.get('difficulty')?.touched && myForm.get('difficulty')?.hasError('required')"
+    >
+      Difficulty is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Scheduled Date -->
+  <mat-form-field>
+    <mat-label>Scheduled Date</mat-label>
+    <input matInput formControlName="scheduledDate" [matDatepicker]="picker" />
+    <mat-hint>DD/MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error
+      *ngIf="
+        myForm.get('scheduledDate')?.touched && myForm.get('scheduledDate')?.hasError('required')
+      "
+    >
+      Scheduled Date is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Elevation -->
+  <mat-form-field>
+    <mat-label>Elevation</mat-label>
+    <input matInput formControlName="elevation" placeholder="263" type="number" />
+    <mat-error
+      *ngIf="myForm.get('elevation')?.touched && myForm.get('elevation')?.hasError('required')"
+    >
+      Elevation is required
+    </mat-error>
+    <mat-error
+      *ngIf="myForm.get('elevation')?.touched && myForm.get('elevation')?.hasError('maxlength')"
+    >
+      Elevation maximum length is 5 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Done -->
+  <div class="done-field">
+    <mat-label>Did you alredy done the hike ?</mat-label>
+    <mat-checkbox matInput formControlName="done">Yes</mat-checkbox>
+  </div>
+
+  <div *ngIf="myForm.get('done')?.value">
+    <!-- Actual Time -->
+    <mat-form-field>
+      <mat-label>Actual Time</mat-label>
+      <input matInput formControlName="actualTime" placeholder="Ex: 3.5" type="number" />
+      <mat-error
+        *ngIf="myForm.get('actualTime')?.touched && myForm.get('actualTime')?.hasError('required')"
+      >
+        Actual Time is required
+      </mat-error>
+      <mat-error
+        *ngIf="myForm.get('actualTime')?.touched && myForm.get('actualTime')?.hasError('maxlength')"
+      >
+        Actual Time maximum length is 5 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Score -->
+    <mat-form-field>
+      <mat-label>Score</mat-label>
+      <mat-select formControlName="score">
+        <mat-option *ngFor="let score of scores" [value]="score"> {{ score }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="myForm.get('score')?.touched && myForm.get('score')?.hasError('required')">
+        Score is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Submit Button -->
+  <button
+    class="add-button custom-button"
+    matButton="filled"
+    type="submit"
+    [disabled]="myForm.invalid"
+  >
+    Edit Hike
+  </button>
+</form>

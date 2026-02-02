@@ -1,0 +1,111 @@
+.statistics {
+  margin-left: 20px;
+}
+
+@media screen and (min-width: 1200px) {
+  .circular-statistics-container {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+  }
+
+  .charts-container {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .circular-statistics-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .charts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    margin-top: 50px;
+  }
+}
+
+.circular-statistics {
+  display: flex;
+  gap: 30px;
+}
+
+//progress circle
+.circular-progress {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background: conic-gradient(#449944 3.6deg, #ededed 0deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  .progress-value {
+    position: relative;
+    font-weight: 600;
+  }
+}
+
+.line-chart-container {
+  width: 500px;
+  height: auto;
+}
+
+.bar-chart-container {
+  width: 500px;
+  height: auto;
+}
+
+.hikes-container {
+  margin-left: 20px;
+}
+
+.add-form {
+  margin-top: 25px;
+
+  .add-button {
+    width: 200px;
+
+    margin-bottom: 20px;
+  }
+}
+.actions-icon {
+  margin-right: 5px;
+}
+
+.color-edit {
+  color: #1560bd;
+}
+
+.color-delete {
+  color: red;
+}
+
+.edit-form {
+  margin-top: 25px;
+
+  .edit-button {
+    width: 200px;
+
+    margin-bottom: 20px;
+  }
+}

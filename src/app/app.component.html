@@ -1,0 +1,23 @@
+<mat-toolbar class="header-toolbar">
+  <button
+    matIconButton
+    (click)="toggleSidebar()"
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon class="white-color">menu</mat-icon>
+  </button>
+  <span class="white-color">HIKES</span>
+  <span class="header-spacer"></span>
+</mat-toolbar>
+
+<mat-drawer-container class="content-container">
+  <mat-drawer mode="side" [opened]="sidebarOpen" class="drawer">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content class="main-content">
+    <router-outlet />
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<p class="copyright">Copyright 2026 NW</p>
