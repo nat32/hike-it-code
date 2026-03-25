@@ -1,4 +1,4 @@
-# Hikes
+# Hike-it
 
 Description: Hike-it est une application contenant un tableau des randonnées effectuées et planifiées, un formulaire d'ajout et de modification ainsi que des statistiques
 
